@@ -1,9 +1,10 @@
-FROM node:12.21-stretch
+FROM node:12-bullseye
+
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
-    && apt-get -qq install --no-install-recommends -y apt-utils postgresql-client-9.6 < /dev/null > /dev/null \
+    && apt-get -qq install --no-install-recommends -y apt-utils postgresql-client \
     && apt-get -qq clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -27,4 +28,3 @@ RUN chown dawa-replicator wrapper.sh \
 USER dawa-replicator
 
 ENTRYPOINT ["bash", "./wrapper.sh"]
-
